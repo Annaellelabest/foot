@@ -1,0 +1,66 @@
+<div class="title">
+    <div class="competition">
+        <div class="area">
+            <div class="areaElmt"><img [src]="competition? competition.areaFlag:''" width="25" height="15" /></div>
+            <div class="areaElmt">{{ competition? competition.areaName:'' }}</div>
+        </div>
+        <div class="competitionElmt"><img [src]="competition? competition.logo:''" width="80" height="100%" /></div>
+        <div class="competitionElmt">{{ competition? competition.name:'' }}</div>
+
+    </div>
+</div>
+
+
+<div *ngIf="stage.length > 1" class="d-flex">
+    <ng-container *ngFor="let s of stage">
+        <button class="button63" (click)="changeStage(s)">
+            <span *ngIf="s=='GROUP_STAGE'">Phase de groupe</span>
+            <span *ngIf="s=='FINAL_PHASE'">Phase Finale</span>
+            <span *ngIf="s=='QUALIFICATION'">Qualification</span>
+            <span *ngIf="s=='PRELIMINARY_ROUND'">Préliminaire</span>
+        </button>
+    </ng-container>
+</div>
+
+<div role="banner">
+
+    <div class="calendrier">
+        <div class="categorie">Calendrier</div>
+        <mat-button-toggle-group class="journee text-center d-flex justify-content-between" name="fontStyle"
+            aria-label="Font Style">
+            <mat-button-toggle (click)="changeMatchDay(-1)" class="nav mat-tab-header-pagination-before">
+                <mat-icon>chevron_left</mat-icon>
+            </mat-button-toggle>
+            <span *ngIf="['GROUP_STAGE', 'REGULAR_SEASON'].includes(currStage)" style="margin: 1vw;">Journée
+                {{currMatchDay}}</span>
+            <span *ngIf="['FINAL_PHASE', 'QUALIFICATION'].includes(currStage)" style="margin: 1vw;">
+                <span *ngIf="currMatchDay == matchday[matchday.length-6]">1/32 de finale</span>
+                <span *ngIf="currMatchDay == matchday[matchday.length-5]">1/16 de finale</span>
+                <span *ngIf="currMatchDay == matchday[matchday.length-4]">1/8 de finale</span>
+                <span *ngIf="currMatchDay == matchday[matchday.length-3]">Quarts de finale</span>
+                <span *ngIf="currMatchDay == matchday[matchday.length-2]">Demi-finales</span>
+                <span *ngIf="currMatchDay == matchday[matchday.length-1]">Finales</span>
+            </span>
+            <mat-button-toggle (click)="changeMatchDay(1)" class="nav mat-tab-header-pagination-after">
+                <mat-icon>chevron_right</mat-icon>
+            </mat-button-toggle>
+        </mat-button-toggle-group>
+        <ng-container *ngFor="let match of currMatches">
+            <app-match-preview [match]="match" style="width: 50%;"></app-match-preview>
+        </ng-container>
+    </div>
+
+    <div class="classements">
+        <div class="categorie">Classement</div>
+        <mat-tab-group>
+            <mat-tab *ngFor="let classement of currClassements" label="{{ label(classement) }}">
+                <app-classement-equipe *ngIf="classement.class=='Equipe'"
+                    [equipes]="classement.data"></app-classement-equipe>
+                <app-classement-scorers *ngIf="classement.class=='Player'"
+                    [players]="classement.data"></app-classement-scorers>
+                <app-bracket *ngIf="classement.class=='Bracket'" [bracket]="classement.data"></app-bracket>
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+
+</div>

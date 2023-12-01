@@ -1,0 +1,32 @@
+<table class="table table-light table-hover">
+  <thead>
+    <tr>
+      <th scope="col" class="text-center">#</th>
+      <th scope="col" class="text-left">Team</th>
+      <th scope="col" class="text-center">Matches played</th>
+      <th scope="col" class="text-center">Wins</th>
+      <th scope="col" class="text-center">Draws</th>
+      <th scope="col" class="text-center">Losses</th>
+      <th scope="col" class="text-center">Goals</th>
+      <th scope="col" class="text-center">Points</th>
+      <th scope="col" class="text-center">Form</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let equipe of equipes">
+      <th scope="row" class="text-center">{{ equipe.datas?.position }}</th>
+      <td (click)="detailEquipe(equipe.code)" class="text-left name"><img [src]="equipe.logo" width="25"
+          height="25" />&nbsp;{{ equipe.shortName }}</td>
+      <td class="text-center">{{ equipe.datas?.playedGames }}</td>
+      <td class="text-center">{{ equipe.datas?.won }}</td>
+      <td class="text-center">{{ equipe.datas?.draw }}</td>
+      <td class="text-center">{{ equipe.datas?.lost }}</td>
+      <td class="text-center">{{ equipe.datas?.goalsFor }}:{{ equipe.datas?.goalsAgainst }}</td>
+      <td class="text-center">{{ equipe.datas?.points }}</td>
+      <td class="text-center" [ngClass]="(equipe.datas?.form)?'d-flex justify-content-md-center':''">
+        <div class="form" *ngFor="let r of equipe.datas?.form"
+          [ngClass]="(r=='W')?'form-w':(r=='D')?'form-d':(r=='L')?'form-l':''">{{ r?r:'?' }}</div>
+      </td>
+    </tr>
+  </tbody>
+</table>

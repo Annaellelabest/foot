@@ -1,0 +1,42 @@
+.title {
+    background-color: #dfdfdf;
+    max-width: 50%;
+    margin: auto;
+    /* border-radius: 5px; */
+}
+
+.name {
+    cursor: pointer;
+}
+
+.area {
+    display: flex;
+    justify-content: center;
+    padding-bottom: 2%;
+}
+
+.areaElmt {
+    display: inline-block;
+    padding-right: 4px;
+}
+
+img {
+    background-color: #fff;
+}
+
+.competition img {
+    border-radius: 15%;
+}
+
+.competitionElmt {
+    display: flex;
+    justify-content: center;
+    padding-right: 4px;
+    font-size: 1.25vw;
+    padding: 5px;
+}
+
+
+.description {
+    margin: 0.5vw;
+}

@@ -1,0 +1,20 @@
+<table class="table table-light table-hover">
+    <thead>
+        <tr>
+            <th scope="col" class="text-center">#</th>
+            <th scope="col" class="text-left">Name</th>
+            <th scope="col" class="text-left">Team</th>
+            <th scope="col" class="text-center">Goals</th>
+            <th scope="col" class="text-center">Assists</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let player of players; let i = index">
+            <th scope="row" class="text-center">{{ i+1 }}</th>
+            <td (click)="detailPlayer(player.id)" class="text-left name"><img [src]="player.flag" width="30" height="20" />&nbsp;{{ player.name }}</td>
+            <td (click)="detailEquipe(player.team?.code)" class="text-left name"><img [src]="player.team?.logo" width="25" height="25" />&nbsp;{{ player.team?.name }}</td>
+            <td class="text-center">{{ player.goals??0 }}</td>
+            <td class="text-center">{{ player.assists??0 }}</td>
+        </tr>
+    </tbody>
+</table>

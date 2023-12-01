@@ -1,0 +1,20 @@
+<div class="title">
+    <div class="competition">
+        <div class="area">
+            <div class="areaElmt"><img [src]="player ? player.flag : ''" width="25" height="15" /></div>
+            <div class="areaElmt">{{ player ? player.nationality : '' }}</div>
+        </div>
+        <div class="competitionElmt"><img class="name" (click)="detailEquipe(player.team!.code)"
+                [src]="player ? player.team?.logo : ''" width="80" height="100%" /></div>
+        <div class="competitionElmt">{{ player ? player.name : '' }} {{(player && player.number) ? 'n°'+player.number : ''}}
+        </div>
+        <div class="competitionElmt">{{ player ? player.position : '' }}</div>
+    </div>
+</div>
+<div *ngFor="let match of matches; let i=index">
+    <div *ngIf="i == 0 || match.competition.code != matches[i-1].competition.code" class="d-flex justify-content-between">
+        <div class="description name"  (click)="detailCompetition(match.competition.code)"><img [src]="match.competition.logo" width="25" height="25" /> {{ match.competition.name }}</div>
+        <div class="description">{{ match.competition.areaName }} <img [src]="match.competition.areaFlag" width="30" height="20" alt="logo" /></div>
+    </div>
+    <app-match-preview [match]="match"></app-match-preview>
+</div>

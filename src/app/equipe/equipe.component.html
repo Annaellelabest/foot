@@ -1,0 +1,83 @@
+<div class="title">
+    <div class="competition">
+        <div class="area">
+            <div class="areaElmt"><img [src]="equipe ? equipe.areaFlag : ''" width="25" height="15" /></div>
+            <div class="areaElmt">{{ equipe? equipe.areaName:'' }}</div>
+        </div>
+        <div class="competitionElmt"><img [src]="equipe ? equipe.logo : ''" width="80" height="100%" /></div>
+        <div class="competitionElmt">{{ equipe? equipe.name:'' }}</div>
+    </div>
+</div>
+<mat-tab-group>
+    <mat-tab label="Résultats">
+        <div *ngFor="let match of pastMatches; let i=index">
+            <div *ngIf="i==0 || match.competition.code != pastMatches[i-1].competition.code"
+                class="d-flex justify-content-between">
+                <div (click)="detailCompetition(match.competition.code)" class="description name"><img
+                        [src]="match.competition.logo" width="25" height="25" /> {{
+                    match.competition.name }}</div>
+                <div class="description">{{ match.competition.areaName }} <img [src]="match.competition.areaFlag"
+                        width="30" height="20" alt="logo" /></div>
+            </div>
+            <app-match-preview [match]="match"></app-match-preview>
+        </div>
+    </mat-tab>
+    <mat-tab label="Calendrier">
+        <div *ngFor="let match of upcomingMatches; let i=index">
+            <div *ngIf="i==0 || match.competition.code != upcomingMatches[i-1].competition.code"
+                class="d-flex justify-content-between">
+                <div (click)="detailCompetition(match.competition.code)" class="description name"><img
+                        [src]="match.competition.logo" width="25" height="25" /> {{
+                    match.competition.name }}</div>
+                <div class="description">{{ match.competition.areaName }} <img [src]="match.competition.areaFlag"
+                        width="30" height="20" alt="logo" /></div>
+            </div>
+            <app-match-preview [match]="match"></app-match-preview>
+        </div>
+    </mat-tab>
+    <mat-tab label="Effectif">
+        <table class="table table-light table-hover">
+            <ng-container *ngFor="let position of positions">
+                <thead>
+                    <tr>
+                        <th scope="col" class="text-center" width="10%">{{ position }}</th>
+                        <th scope="col" class="text-left">Name</th>
+                        <th scope="col" class="text-center">Age</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let player of equipe?.players?.concat(equipe?.coach??[])">
+                        <ng-container *ngIf="player.position == position">
+                            <th scope="row" class="text-left"></th>
+                            <td (click)="detailPlayer(player.id)" class="text-left name"><img *ngIf="player.flag"
+                                    [src]="player.flag" width="30" height="20" />&nbsp;{{ player.name }}</td>
+                            <td class="text-center">{{ player.age }}</td>
+                        </ng-container>
+                    </tr>
+                </tbody>
+                <br>
+            </ng-container>
+        </table>
+    </mat-tab>
+    <mat-tab label="Compétitions">
+        <table class="table table-light table-hover">
+            <thead>
+                <tr>
+                    <th scope="col" class="text-center">#</th>
+                    <th scope="col" class="text-left">Name</th>
+                    <th scope="col" class="text-center">Type</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let competition of equipe?.competitions">
+                    <th scope="row" class="text-center"></th>
+                    <td class="text-left name" (click)="detailCompetition(competition.code)"><img
+                            [src]="competition.logo" width="25" height="25" />&nbsp;{{ competition.name }}</td>
+                    <td class="text-center">{{ (competition.type == 'LEAGUE') ? 'Championnat': (competition.type ==
+                        'CUP') ? 'Coupe' : ''}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </mat-tab>
+
+</mat-tab-group>
